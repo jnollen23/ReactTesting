@@ -1,24 +1,25 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import CrComLib from '@crestron/ch5-crcomlib';
 
 function App() {
+  const sendDigital = (index:string, value:boolean)=>CrComLib.publishEvent('b', index, value);
+  const setDigital = (index:string) => CrComLib.publishEvent('b', index, true);
+  const stopDigital = (index:string) => CrComLib.publishEvent('b', index, false);
+  const pulseDigital = (index:string)=>{setDigital(index); setTimeout(()=>stopDigital(index))};
+  const StartRoom = ()=>{pulseDigital("1")};
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        Hello World
       </header>
+      <section>
+        <button onClick={StartRoom}> 
+          Click me and see
+        </button>
+      </section>
     </div>
   );
 }
